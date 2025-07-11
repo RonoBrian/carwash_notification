@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket Test</title>
+</head>
+<body>
+  <h2>Tenant 123 Notification Listener</h2>
+  <div id="output"></div>
+
+  <script>
+    const ws = new WebSocket("ws://127.0.0.1:8001/ws/notifications/tenant_123/");
+
+    ws.onopen = () => {
+      document.getElementById("output").innerHTML += "<p>✅ WebSocket connected</p>";
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      document.getElementById("output").innerHTML += `<p>🔔 ${data.message}</p>`;
+    };
+
+    ws.onclose = () => {
+      document.getElementById("output").innerHTML += "<p>❌ WebSocket closed</p>";
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+services:
+  django:
+    image: python:3.10-slim
+    command: bash -c "pip install -r requirements.txt && daphne -b 0.0.0.0 -p 8000 backend.asgi:application"
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
